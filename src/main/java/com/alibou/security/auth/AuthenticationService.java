@@ -178,29 +178,6 @@ import java.util.UUID;
 //
 //}
 
-import com.alibou.security.config.JwtService;
-import com.alibou.security.token.Token;
-import com.alibou.security.token.TokenRepository;
-import com.alibou.security.token.TokenType;
-import com.alibou.security.user.User;
-import com.alibou.security.user.UserRepository;
-import com.alibou.security.verification.service.VerificationService;
-import com.alibou.security.twofa.service.TwoFactorService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.AddressException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import java.io.IOException;
-import java.util.UUID;
-
-
 
 @Service
 @RequiredArgsConstructor
@@ -228,7 +205,6 @@ public class AuthenticationService {
             )
     );
 
-    // 2FA validation
     if (user.isUsing2fa()) {
       if (request.getCode() == null) {
         throw new InvalidAuthenticationException("2FA code required");
@@ -271,5 +247,5 @@ public class AuthenticationService {
     tokenRepository.saveAll(validUserTokens);
   }
 
-}
+  }
 

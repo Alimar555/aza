@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import dev.samstevens.totp.code.DefaultCodeGenerator;
 import dev.samstevens.totp.time.SystemTimeProvider;
+import dev.samstevens.totp.code.HashingAlgorithm;
 
 
 
@@ -29,7 +30,10 @@ public class TwoFactorConfig {
 
     @Bean
     public CodeVerifier codeVerifier() {
-        return new DefaultCodeVerifier(new DefaultCodeGenerator(), new SystemTimeProvider());
+        return new DefaultCodeVerifier(
+                new DefaultCodeGenerator(HashingAlgorithm.SHA1),
+                new SystemTimeProvider()
+        );
     }
 
 }
