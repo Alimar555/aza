@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<h1>Welcome to Our Service!</h1>
+<p>Thank you for registering. Please verify your email address by clicking the button below:</p>
+<a class="button" th:href="${verificationUrl}">Verify Email</a>
+</body>
+</html>

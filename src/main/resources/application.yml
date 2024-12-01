@@ -1,0 +1,82 @@
+#spring:
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/postgres
+#    username: postgres
+#    password: postgres
+#    driver-class-name: org.postgresql.Driver
+#  jpa:
+#    hibernate:
+#      ddl-auto: create-drop
+#    show-sql: false
+#    properties:
+#      hibernate:
+#        format_sql: true
+#    database: postgresql
+#    database-platform: org.hibernate.dialect.PostgreSQLDialect
+#
+#application:
+#  security:
+#    jwt:
+#      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+#      expiration: 86400000 # a day
+#      refresh-token:
+#        expiration: 604800000 # 7 days
+
+
+
+spring:
+  spring:
+    mail:
+      host: smtp.gmail.com
+      port: 587
+      username: "alimbekov.ardak@gmail.com"
+      password: "jzfmukpnrgjmprcp"
+      properties:
+        mail:
+          smtp:
+            auth: true
+            starttls:
+              enable: true
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update  # Changed from create-drop to update for production safety
+    show-sql: true      # Enable SQL logging for development
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: public  # Explicitly set schema
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    database: postgresql
+    generate-ddl: true  # Enable DDL generation
+
+# Added server configuration
+server:
+  port: 8080
+  error:
+    include-message: always
+
+# Your existing JWT configuration
+application:
+  security:
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 86400000
+      refresh-token:
+        expiration: 604800000
+
+logging:
+  level:
+    org.springframework.mail: DEBUG
+    com.sun.mail: DEBUG
+
+
+
