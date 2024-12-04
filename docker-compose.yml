@@ -1,10 +1,11 @@
 services:
   postgres:
     container_name: postgres-sql
-    image: postgres
+    image: postgres:latest
     environment:
       POSTGRES_USER: username
       POSTGRES_PASSWORD: password
+      POSTGRES_DB: jwt_security
       PGDATA: /data/postgres
     volumes:
       - postgres:/data/postgres
@@ -13,13 +14,18 @@ services:
     networks:
       - postgres
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U username"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   pgadmin:
     container_name: pgadmin
-    image: dpage/pgadmin4
+    image: dpage/pgadmin4:latest
     environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: admin
       PGADMIN_CONFIG_SERVER_MODE: 'False'
     volumes:
       - pgadmin:/var/lib/pgadmin
@@ -28,6 +34,9 @@ services:
     networks:
       - postgres
     restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
 
 networks:
   postgres:
